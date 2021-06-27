@@ -1,0 +1,64 @@
+{
+  "name": "hexlet-interview",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "repl": "nodemon --experimental-repl-await repl.js",
+    "lint": "eslint --ext .js .",
+    "lint:fix": "eslint --ext .js . --fix",
+    "test": "mocha test",
+    "migration:run": "knex migrate:latest",
+    "migration:generate": "knex migrate:make",
+    "fixtures:load": "fixtures ./test/fixtures --config ./src/ormconfig.ts --require=ts-node/register --require=tsconfig-paths/register"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "date-fns": "^2.6.0",
+    "dotenv": "^8.1.0",
+    "fastify": "^3.12.0",
+    "fastify-auth": "^1.0.1",
+    "fastify-error-page": "^4.0.0",
+    "fastify-formbody": "^5.0.0",
+    "fastify-objectionjs": "^0.3.0",
+    "helmet": "^3.21.1",
+    "knex": "^0.21.18",
+    "lodash": "^4.17.15",
+    "memorystore": "^1.6.1",
+    "mocha": "^8.3.0",
+    "nodemailer": "^6.3.0",
+    "nodemon": "^2.0.7",
+    "pg": "^8.5.1",
+    "pino-pretty": "^4.5.0",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint": "7.1.0",
+    "eslint-config-standard": "14.1.1",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-mocha": "7.0.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
+    "faker": "^4.1.0",
+    "nock": "^11.3.5",
+    "nodemailer-mock-transport": "1.3.0",
+    "supertest": "4.0.2"
+  },
+  "nodemonConfig": {
+    "restartable": false
+  },
+  "mocha": {
+    "slow": 2000,
+    "colors": true,
+    "full-trace": true,
+    "recursive": true,
+    "spec": "test/**/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Hexlet/hexlet-interview.git"
+  }
+}

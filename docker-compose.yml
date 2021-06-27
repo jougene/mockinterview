@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  app:
+    image: node:14
+    ports:
+      - 3030:3000
+    env_file:
+      - development.env
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: npm start
+
+  db:
+    image: postgres:11
+    environment:
+      POSTGRES_PASSWORD: interview
+      POSTGRES_DB: interview
+      POSTGRES_USER: interview
+    ports:
+      - 15432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+  db_test:
+    image: postgres:11
+    ports:
+      - 15433:5432
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+
+volumes:
+  pg-data:
