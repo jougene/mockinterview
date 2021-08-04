@@ -8,6 +8,7 @@ const config = require('./src/config')
 const server = repl.start({ prompt: 'app#> ', useGlobal: true })
 server.context.fastify = fastify
 server.context.app = app
+
 Object.entries(models).forEach(([name, model]) => {
   server.context[name] = model
 })

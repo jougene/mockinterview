@@ -1,22 +1,19 @@
-.PHONY: test
+.PHONY: test bin logs
+
+install:
+	docker-compose run app npm install
+
+start: migrate
+	docker-compose up -d
 
 shell:
 	docker-compose exec app bash
 
-db-up:
-	docker-compose up -d
+logs:
+	docker-compose logs -f app
 
-db-down:
-	docker-compose down
+migrate:
+	docker-compose run app npm run migrate
 
-db-console:
-	docker-compose exec db psql -U test -d interview
-
-db-console-test:
-	docker-compose exec db_test psql -U test -d interview-test
-
-db-reset:
-	npm run schema:drop && npm run migration:run && npm run fixtures:load
-
-fixtures-load:
-	npm run fixtures:load
+repl:
+	docker-compose exec app npm run repl

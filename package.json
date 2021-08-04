@@ -10,11 +10,11 @@
     "lint": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js . --fix",
     "test": "mocha test",
-    "migration:run": "knex migrate:latest",
-    "migration:generate": "knex migrate:make",
+    "migrate": "knex migrate:latest",
     "fixtures:load": "fixtures ./test/fixtures --config ./src/ormconfig.ts --require=ts-node/register --require=tsconfig-paths/register"
   },
   "dependencies": {
+    "@jougene/noar": "^0.1.1",
     "bcrypt": "^3.0.6",
     "date-fns": "^2.6.0",
     "dotenv": "^8.1.0",

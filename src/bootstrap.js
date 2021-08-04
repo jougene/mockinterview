@@ -6,7 +6,7 @@ const app = fastify({ logger: { level: 'error', prettyPrint: { colorize: true } 
 // database
 const models = require('./app/models')
 const knex = require('knex')(config.database)
-const { Model } = require('objection')
+const Noar = require('@jougene/noar')
 
 Model.knex(knex)
 
