@@ -6,6 +6,7 @@ const config = {
   app: {
     dir: {
       root: rootDir,
+      models: `${rootDir}/src/app/models`,
       views: `${rootDir}/views`,
       public: `${rootDir}/public`
     }
