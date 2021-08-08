@@ -1,46 +1,26 @@
-const Model = require('../BaseModel')
+const { Model } = require('@jougene/noar')
 
 class Interview extends Model {
-  static tableName = 'interviews'
-
-  $beforeInsert () {
-    this.status = 'wait_for_interviewer'
+  static defaults = {
+    status: 'wait_for_interviewer'
   }
 
-  // static passed () {
-  // return this.q.where('status', 'passed')
-  // }
-
-  // static coming () {
-  // return this.q.where('status', 'coming')
-  // }
+  static scopes = {
+    waiting: (qb) => qb.where({ status: 'wait_for_interviewer' }),
+    passed: (qb) => qb.where({ status: 'passed' }),
+    coming: (qb) => qb.where({ status: 'coming' })
+  }
 
   static withParticipants () {
     return this.with('interviewer', 'interviewee')
   }
 
-  static get relationMappings () {
-    const User = require('./User')
-
+  static get relations () {
     return {
-      interviewer: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: 'interviews.interviewer_id',
-          to: 'users.id'
-        }
-      },
-      interviewee: {
-        relation: Model.BelongsToOneRelation,
-        modelClass: User,
-        join: {
-          from: 'interviews.interviewee_id',
-          to: 'users.id'
-        }
-      }
+      interviewer: { belongsTo: require('./User'), join: 'interviewer_id' },
+      interviewee: { belongsTo: require('./User'), join: 'interviewee_id' }
     }
-  };
+  }
 }
 
 module.exports = Interview

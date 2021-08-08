@@ -1,4 +1,6 @@
-const { User, Interview } = require('../models')
+const User = require('../models/User')
+const Interview = require('../models/Interview')
+
 const { getPreviewFromVideoLink } = require('../helpers')
 
 const handler = async (_, res) => {

@@ -1,6 +1,10 @@
-const app = require('../src/bootstrap.js')
+const app = require('../src/bootstrap')
 
 class Application {
+  async start () {
+    return app.ready()
+  }
+
   async get (url) {
     return this.request('GET', url)
   }

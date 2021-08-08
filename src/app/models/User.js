@@ -1,11 +1,11 @@
-const { snakeCaseMappers } = require('objection')
-const Model = require('../BaseModel')
+const { Model } = require('@jougene/noar')
 
 class User extends Model {
-  static tableName = 'users'
-
-  static get virtualAttributes () {
-    return ['fullName']
+  static get relations () {
+    return {
+      passedInterviews: { hasMany: require('./Interview') },
+      conductedInterviews: { hasMany: require('./Interview') }
+    }
   }
 
   get fullName () {
@@ -13,41 +13,13 @@ class User extends Model {
   }
 
   static async me () {
-    return this.q.where({ firstname: 'Евгений', lastname: 'Синицын' }).first()
+    return this.where({ firstname: 'Евгений', lastname: 'Синицын' }).first()
   }
 
   static async admin () {
-    return this.q.where({ role: 'admin', firstname: 'admin' }).first()
+    return this.where({ role: 'admin', firstname: 'admin' }).first()
   }
 
-  static get columnNameMappers () {
-    return snakeCaseMappers()
-  }
-
-  static get relationMappings () {
-    const Interview = require('./Interview')
-
-    return {
-      // пройденные
-      passedInterviews: {
-        relation: Model.HasManyRelation,
-        modelClass: Interview,
-        join: {
-          from: 'users.id',
-          to: 'interviews.interviewee_id'
-        }
-      },
-      // проведенные
-      conductedInterviews: {
-        relation: Model.HasManyRelation,
-        modelClass: Interview,
-        join: {
-          from: 'users.id',
-          to: 'interviews.interviewer_id'
-        }
-      }
-    }
-  }
 }
 
 module.exports = User

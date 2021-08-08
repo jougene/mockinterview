@@ -1,14 +1,15 @@
-const { User, Interview } = require('../models')
+const User = require('../models/User')
+const Interview = require('../models/Interview')
 
 const index = async (req, res) => {
-  const interviews = await Interview.q
+  const interviews = await Interview.all()
 
   return interviews
 }
 
 const show = async (req, res) => {
   const { params: { id } } = req
-  const interview = await Interview.q.findById(id)
+  const interview = await Interview.find(id)
 
   return interview
 }
@@ -18,8 +19,8 @@ const create = async (req, res) => {
 
   const { profession, position, description } = req.body
 
-  const interview = await Interview.q.insert({
-    interviewee_id: user.id,
+  const interview = await Interview.create({
+    interviewee: user,
     profession,
     position,
     description
@@ -30,7 +31,7 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const { params: { id } } = req
-  const interview = await Interview.q.findById(id)
+  const interview = await Interview.find(id)
 
   // edit interview
   return interview
@@ -38,7 +39,7 @@ const update = async (req, res) => {
 
 const destroy = async (req, res) => {
   const { params: { id } } = req
-  const interview = await Interview.q.findById(id)
+  const interview = await Interview.find(id)
 
   // edit interview
   return interview
