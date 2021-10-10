@@ -10,9 +10,11 @@ describe('get all interviews', () => {
     const res = await app.get('/interview')
 
     assert.equal(res.statusCode, 200)
-  })
-})
 
-after(async () => {
-  await app.close()
+    // console.log(res.json())
+  })
+
+  after(async () => {
+    await app.close()
+  })
 })

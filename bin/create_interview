@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+curl -qs -X POST -H 'content-type: application/json' \
+  -d '{"profession": "php", "position": "middle"}' \
+  http://localhost:3030/interview

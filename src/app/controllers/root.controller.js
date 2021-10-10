@@ -3,9 +3,9 @@ const Interview = require('../models/Interview')
 
 const { getPreviewFromVideoLink } = require('../helpers')
 
-const handler = async (_, res) => {
+const handler = async () => {
   const interviews = await Interview.withParticipants().whereIn('status', ['passed', 'coming'])
-  const user = await User.q.where('role', 'interviewee').first()
+  const user = await User.where('role', 'interviewee').first()
 
   const userComingInterviews = await Interview.with('interviewer')
     .where('interviewee_id', user.id)
@@ -18,7 +18,7 @@ const handler = async (_, res) => {
   const comingInterviews = interviewsWithPreview.filter(i => i.status === 'coming')
   const pastInterviews = interviewsWithPreview.filter(i => i.status === 'passed')
 
-  return res.view('index', { comingInterviews, pastInterviews, userComingInterviews })
+  return { comingInterviews, pastInterviews, userComingInterviews }
 }
 
 module.exports = handler
