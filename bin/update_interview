@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+INTERVIEW_ID=$1
+
+if [[ -z "$INTERVIEW_ID" ]];
+  then echo "Provide INTERVIEW_ID";
+  exit 1
+fi
+
+curl -qs -X PUT -H 'content-type: application/json' \
+  -d '{"profession": "javascript"}' \
+  http://localhost:3030/interview/$INTERVIEW_ID

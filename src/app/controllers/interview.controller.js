@@ -11,6 +11,10 @@ const show = async (req, res) => {
   const { params: { id } } = req
   const interview = await Interview.find(id)
 
+  if (!interview) {
+    return res.code(404).send('Interview not found')
+  }
+
   return interview
 }
 
@@ -20,7 +24,7 @@ const create = async (req, res) => {
   const { profession, position, description } = req.body
 
   const interview = await Interview.create({
-    interviewee: user,
+    intervieweeId: user.id,
     profession,
     position,
     description
@@ -33,22 +37,49 @@ const update = async (req, res) => {
   const { params: { id } } = req
   const interview = await Interview.find(id)
 
+  console.log(`Updating interview with id [${id}]... `)
+
   // edit interview
   return interview
 }
 
 const destroy = async (req, res) => {
   const { params: { id } } = req
+
   const interview = await Interview.find(id)
+
+  console.log(`Deleting interview with id [${id}]... `)
 
   // edit interview
   return interview
 }
 
 const admin = {
-  async assign (_, res) {},
-  async edit (_, res) {},
-  async update (_, res) {}
+  async assign (req, res) {
+    const { params: { id } } = req
+    const { interviewer_id: interviewerId } = req.body
+
+    let interview = await Interview.find(id)
+    const interviewer = await User.where({ role: 'interviewer' }).find(interviewerId)
+
+    if (!interviewer) {
+      return res.code(404).send('Interviewer not found')
+    }
+
+    interview.interviewer = interviewer
+
+    console.log(`Assigning interview [${id}] to interviewer [${interviewerId}]`)
+
+    interview = await interview.save()
+
+    return interview
+  },
+  async edit (_, res) {
+    res.send('Not implemented yet!')
+  },
+  async update (_, res) {
+    res.send('Not implemented yet!')
+  }
 }
 
 module.exports = {
