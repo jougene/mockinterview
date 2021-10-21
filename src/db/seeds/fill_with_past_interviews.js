@@ -99,7 +99,7 @@ exports.seed = async (knex) => {
   const allUsers = _.uniqBy([...interviewers, ...interviewees], i => i.firstname && i.lastname)
 
   await knex.transaction(async trx => {
-    await trx.raw('truncate users cascade')
+    await trx.raw('TRUNCATE users RESTART IDENTITY CASCADE')
     const users = await trx.batchInsert('users', allUsers, 10).returning('*')
     console.log(users)
 

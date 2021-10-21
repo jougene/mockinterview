@@ -18,6 +18,12 @@ class User extends Model {
     return me
   }
 
+  static async interviewer () {
+    const [res] = await this.where({ role: 'interviewer' })
+
+    return res
+  }
+
   static async admin () {
     return this.where({ role: 'admin', firstname: 'admin' }).first()
   }

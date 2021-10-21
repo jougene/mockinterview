@@ -2,7 +2,7 @@ const User = require('../models/User')
 const Interview = require('../models/Interview')
 
 const index = async (req, res) => {
-  const interviews = await Interview.all()
+  const interviews = await Interview.all().orderBy(['id', 'desc'])
 
   return interviews
 }
@@ -18,7 +18,7 @@ const show = async (req, res) => {
   return interview
 }
 
-const create = async (req, res) => {
+const create = async (req, _res) => {
   const user = await User.me()
 
   const { profession, position, description } = req.body
@@ -33,9 +33,11 @@ const create = async (req, res) => {
   return interview
 }
 
-const update = async (req, res) => {
+const update = async (req, _res) => {
   const { params: { id } } = req
-  const interview = await Interview.find(id)
+  const { profession } = req.body
+
+  const interview = await Interview.update({ id }, { profession })
 
   console.log(`Updating interview with id [${id}]... `)
 
@@ -43,14 +45,13 @@ const update = async (req, res) => {
   return interview
 }
 
-const destroy = async (req, res) => {
+const destroy = async (req, _res) => {
   const { params: { id } } = req
 
   const interview = await Interview.find(id)
 
   console.log(`Deleting interview with id [${id}]... `)
 
-  // edit interview
   return interview
 }
 
@@ -66,18 +67,24 @@ const admin = {
       return res.code(404).send('Interviewer not found')
     }
 
-    interview.interviewer = interviewer
-
     console.log(`Assigning interview [${id}] to interviewer [${interviewerId}]`)
 
-    interview = await interview.save()
+    const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1))
+
+    interview = await interview.assign({ interviewer, plannedAt: tomorrow })
 
     return interview
   },
-  async edit (_, res) {
+
+  async edit (_req, res) {
+    // const { params: { id } } = req
+
     res.send('Not implemented yet!')
   },
-  async update (_, res) {
+
+  async update (_req, res) {
+    // const { params: { id } } = req
+
     res.send('Not implemented yet!')
   }
 }

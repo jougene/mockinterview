@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 
 INTERVIEW_ID=$1
-INTERVIEWER_ID=$2
+# INTERVIEWER_ID=$2
 
 if [[ -z "$INTERVIEW_ID" ]];
   then echo "Provide INTERVIEW_ID";
   exit 1
 fi
+
+# if [[ -z "$INTERVIEWER_ID" ]];
+  # then echo "Provide INTERVIEWER_ID";
+  # exit 1
+# fi
+
+# INTERVIEW_ID=11
+INTERVIEWER_ID=1
 
 curl -qs -X POST -H 'content-type: application/json' \
   -d "{\"interviewer_id\": $INTERVIEWER_ID}" \

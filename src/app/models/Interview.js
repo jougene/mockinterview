@@ -21,6 +21,30 @@ class Interview extends Model {
       interviewee: { belongsTo: require('./User'), join: 'interviewee_id' }
     }
   }
+
+  // FSM?
+  async assign ({ interviewer, plannedAt }) {
+    this.interviewerId = interviewer.id
+    this.plannedAt = plannedAt
+
+    this.status = 'coming'
+
+    return this.save()
+  }
+
+  async unassign () {
+    this.interviewerId = null
+    this.status = 'wait_for_interviewer'
+    this.plannedAt = null
+
+    return this.save()
+  }
+
+  async markAsPassed () {
+    this.status = 'passed'
+
+    return this.save()
+  }
 }
 
 module.exports = Interview

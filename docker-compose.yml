@@ -25,14 +25,5 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
 
-  db_test:
-    image: postgres:11
-    ports:
-      - 15433:5432
-    environment:
-      POSTGRES_DB: test
-      POSTGRES_PASSWORD: test
-      POSTGRES_USER: test
-
 volumes:
   pg-data:
