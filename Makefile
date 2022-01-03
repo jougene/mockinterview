@@ -20,6 +20,9 @@ logs:
 migrate:
 	docker-compose run --rm app npm run migrate
 
+migrate.test:
+	docker-compose run --rm app npm run migrate.test
+
 seed:
 	docker-compose run --rm app npm run seed
 

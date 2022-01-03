@@ -13,6 +13,14 @@ class Application {
     return this.request('POST', url, { params: data })
   }
 
+  async put (url, data = {}) {
+    return this.request('PUT', url, { params: data })
+  }
+
+  async delete (url, data = {}) {
+    return this.request('DELETE', url, { params: data })
+  }
+
   async request (method, url, options) {
     const { params, headers } = { ...{ headers: {}, params: null }, ...options }
 

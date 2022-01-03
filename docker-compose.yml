@@ -2,20 +2,21 @@ version: '2'
 
 services:
   app:
-    image: node:14
+    image: node:16
     ports:
       - 3030:3000
     env_file:
       - .env
     volumes:
       - ./:/app
+      - ../noar:/noar
     depends_on:
       - db
     working_dir: /app
     command: npm start
 
   db:
-    image: postgres:11
+    image: postgres:12.7
     environment:
       POSTGRES_PASSWORD: interview
       POSTGRES_DB: interview
@@ -23,6 +24,7 @@ services:
     ports:
       - 25432:5432
     volumes:
+      - ./docker/pg:/docker-entrypoint-initdb.d/
       - pg-data:/var/lib/postgresql/data
 
 volumes:

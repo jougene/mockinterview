@@ -13,15 +13,11 @@ class User extends Model {
   }
 
   static async me () {
-    const [me] = await this.where({ firstname: 'Евгений', lastname: 'Синицын' })
-
-    return me
+    return this.where({ firstname: 'Евгений', lastname: 'Синицын' }).first()
   }
 
   static async interviewer () {
-    const [res] = await this.where({ role: 'interviewer' })
-
-    return res
+    return this.where({ role: 'interviewer' }).first()
   }
 
   static async admin () {

@@ -24,26 +24,15 @@ class Interview extends Model {
 
   // FSM?
   async assign ({ interviewer, plannedAt }) {
-    this.interviewerId = interviewer.id
-    this.plannedAt = plannedAt
-
-    this.status = 'coming'
-
-    return this.save()
+    return this.update({ interviewer, plannedAt, status: 'coming' })
   }
 
   async unassign () {
-    this.interviewerId = null
-    this.status = 'wait_for_interviewer'
-    this.plannedAt = null
-
-    return this.save()
+    return this.update({ plannedAt: null, interviewer: null, status: 'wait_for_interviewer' })
   }
 
   async markAsPassed () {
-    this.status = 'passed'
-
-    return this.save()
+    return this.update({ status: 'passed' })
   }
 }
 

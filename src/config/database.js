@@ -8,7 +8,7 @@ module.exports = {
     port: 5432,
     user: 'interview',
     password: 'interview',
-    database: 'interview'
+    database: process.env.DB_NAME ?? 'interview'
   },
   seeds: {
     directory: `${rootDir}/src/db/seeds`

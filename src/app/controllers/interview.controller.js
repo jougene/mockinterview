@@ -9,7 +9,7 @@ const index = async (req, res) => {
 
 const show = async (req, res) => {
   const { params: { id } } = req
-  const interview = await Interview.find(id)
+  const interview = await Interview.withParticipants().find(id)
 
   if (!interview) {
     return res.code(404).send('Interview not found')
@@ -24,7 +24,7 @@ const create = async (req, _res) => {
   const { profession, position, description } = req.body
 
   const interview = await Interview.create({
-    intervieweeId: user.id,
+    interviewee: user,
     profession,
     position,
     description
@@ -37,7 +37,9 @@ const update = async (req, _res) => {
   const { params: { id } } = req
   const { profession } = req.body
 
-  const interview = await Interview.update({ id }, { profession })
+  const interview = await Interview.find(id)
+
+  await interview.update({ profession })
 
   console.log(`Updating interview with id [${id}]... `)
 
@@ -52,15 +54,24 @@ const destroy = async (req, _res) => {
 
   console.log(`Deleting interview with id [${id}]... `)
 
+  await interview.remove()
+
   return interview
 }
 
 const admin = {
   async assign (req, res) {
+    console.dump(123)
+
     const { params: { id } } = req
     const { interviewer_id: interviewerId } = req.body
 
     let interview = await Interview.find(id)
+
+    if (interview.status === 'coming') {
+      return res.code(422).send('Interview already assigned')
+    }
+
     const interviewer = await User.where({ role: 'interviewer' }).find(interviewerId)
 
     if (!interviewer) {

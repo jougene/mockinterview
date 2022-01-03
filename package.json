@@ -12,11 +12,12 @@
     "lint:fix": "eslint --ext .js . --fix",
     "test": "mocha test --exit",
     "migrate": "knex migrate:latest",
+    "migrate.test": "DB_NAME=interview_test knex migrate:latest",
     "seed": "knex seed:run",
     "seed-1": "node test/seed.js"
   },
   "dependencies": {
-    "@jougene/noar": "0.1.2",
+    "@jougene/noar": "file:../noar",
     "bcrypt": "^3.0.6",
     "date-fns": "^2.6.0",
     "dotenv": "^8.1.0",
@@ -25,6 +26,7 @@
     "fastify-error-page": "^4.0.0",
     "fastify-formbody": "^5.0.0",
     "helmet": "^3.21.1",
+    "knex": "^0.95.15",
     "lodash": "^4.17.15",
     "memorystore": "^1.6.1",
     "mocha": "^8.3.0",
@@ -55,7 +57,11 @@
     "colors": true,
     "full-trace": true,
     "recursive": true,
-    "spec": "test/**/*.test.js"
+    "spec": "test/**/*.test.js",
+    "file": [
+      "./test/bootstrap.js"
+    ]
+
   },
   "repository": {
     "type": "git",

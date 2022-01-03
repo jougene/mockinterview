@@ -18,4 +18,5 @@ INTERVIEWER_ID=1
 
 curl -qs -X POST -H 'content-type: application/json' \
   -d "{\"interviewer_id\": $INTERVIEWER_ID}" \
-  http://localhost:3030/admin/interview/$INTERVIEW_ID/assign -vvv
+  http://localhost:3030/admin/interview/$INTERVIEW_ID/assign
+  # -vvv

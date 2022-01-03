@@ -5,10 +5,11 @@ const config = require('./src/config')
 
 fastify.ready().then(app => {
   const server = repl.start({ prompt: 'app#> ', useGlobal: true })
-  server.context.fastify = fastify
 
-  app.db.models.forEach(model => {
-    server.context[model.name] = model
+  server.context.f = fastify
+
+  Object.entries(app.db.models).forEach(([name, model]) => {
+    server.context[name] = model
   })
 
   server.setupHistory(`${config.app.dir.root}/.node_history`, e => {
