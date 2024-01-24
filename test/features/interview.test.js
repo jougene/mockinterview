@@ -7,10 +7,12 @@ const Interview = require('../../src/app/models/Interview')
 describe('Interview', () => {
   before(async () => {
     await app.start()
-    // reset database
-    await User.create({
-      firstname: 'Евгений', lastname: 'Синицын', role: 'interviewee'
-    })
+
+    await app.reset()
+  })
+
+  after(async () => {
+    await app.close()
   })
 
   it('get all interviews', async () => {
@@ -31,7 +33,13 @@ describe('Interview', () => {
 
     const body = res.json()
 
-    console.dump({ body })
+    assert(Array.isArray(body))
+    assert.equal(body.length, 1)
+
+    const [interview] = body
+
+    assert.ok(interview.id)
+    assert.equal(interview.status, 'wait_for_interviewer')
   })
 
   it('get one interview', async () => {
@@ -50,7 +58,7 @@ describe('Interview', () => {
 
     const body = res.json()
 
-    console.dump({ body })
+    assert.equal(body.id, interview.id)
   })
 
   it('create interview', async () => {
@@ -63,7 +71,11 @@ describe('Interview', () => {
 
     const body = res.json()
 
-    console.dump({ body })
+    assert.ok(body.id)
+
+    assert.equal(body.profession, data.profession)
+    assert.equal(body.position, data.position)
+    assert.equal(body.status, 'wait_for_interviewer')
   })
 
   it('delete interview', async () => {
@@ -82,9 +94,9 @@ describe('Interview', () => {
 
     const body = res.json()
 
-    interview = await Interview.find(interview.id)
+    assert.equal(body.id, interview.id)
 
-    assert.equal(interview, undefined)
+    assert.equal(await Interview.find(interview.id), undefined)
   })
 
   it('update interview', async () => {
@@ -103,7 +115,8 @@ describe('Interview', () => {
 
     const body = res.json()
 
-    console.dump({ body })
+    assert.equal(body.id, interview.id)
+    assert.equal(body.profession, 'Javascript')
 
     interview = await Interview.find(interview.id)
 
@@ -137,9 +150,5 @@ describe('Interview', () => {
 
     assert.equal(interview.interviewerId, interviewer.id)
     assert.equal(interview.status, 'coming')
-  })
-
-  after(async () => {
-    await app.close()
   })
 })

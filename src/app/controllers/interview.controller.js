@@ -61,8 +61,6 @@ const destroy = async (req, _res) => {
 
 const admin = {
   async assign (req, res) {
-    console.dump(123)
-
     const { params: { id } } = req
     const { interviewer_id: interviewerId } = req.body
 

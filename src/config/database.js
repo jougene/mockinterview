@@ -4,8 +4,8 @@ const rootDir = path.resolve(__dirname, '../..')
 module.exports = {
   client: 'pg',
   connection: {
-    host: 'db',
-    port: 5432,
+    host: 'localhost',
+    port: 25432,
     user: 'interview',
     password: 'interview',
     database: process.env.DB_NAME ?? 'interview'
@@ -18,8 +18,5 @@ module.exports = {
     tableName: 'migrations'
   },
   acquireConnectionTimeout: 5000,
-  pool: {
-    min: 2,
-    max: 5
-  }
+  pool: { min: 2, max: 5 }
 }

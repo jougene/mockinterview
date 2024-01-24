@@ -1,8 +1,12 @@
 const app = require('../src/bootstrap')
 
 class Application {
+  constructor() {
+    this.app = app
+  }
+
   async start () {
-    return app.ready()
+    return this.app.ready()
   }
 
   async get (url) {
@@ -24,11 +28,17 @@ class Application {
   async request (method, url, options) {
     const { params, headers } = { ...{ headers: {}, params: null }, ...options }
 
-    return app.inject({ method, url, headers, payload: params })
+    return this.app.inject({ method, url, headers, payload: params })
+  }
+
+  async reset() {
+    await this.app.db.connection.raw(`TRUNCATE users RESTART IDENTITY CASCADE`)
+    await this.app.db.connection.raw(`TRUNCATE interviews RESTART IDENTITY CASCADE`)
   }
 
   async close () {
-    await app.close()
+    await this.app.db.connection.destroy()
+    await this.app.close()
   }
 }
 

@@ -8,7 +8,6 @@ module.exports = (app, _, done) => {
   })
   app.context('interview', (app) => {
     app.post('/:id/assign', controllers.interview.admin.assign)
-
     app.get('/:id/edit', controllers.interview.admin.edit)
     app.put('/:id', controllers.interview.admin.update)
   })
