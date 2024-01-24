@@ -1,6 +1,7 @@
 const controllers = require('./app/controllers')
 
 module.exports = (app, _, done) => {
+  app.get('/', controllers.root)
   app.get('/me', controllers.my.index)
 
   app.context('interview', (app) => {

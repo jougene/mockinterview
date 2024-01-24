@@ -6,7 +6,7 @@ const index = async (_, res) => {
 
   const interviews = await Interview
     .waiting()
-    .where('interviewee_id', user.id)
+    .where({ intervieweeId: user.id })
     .orderBy('createdAt', 'DESC')
 
   return { user, interviews }

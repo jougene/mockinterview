@@ -13,7 +13,7 @@ class User extends Model {
   }
 
   static async me () {
-    return this.where({ firstname: 'Евгений', lastname: 'Синицын' }).first()
+    return this.where({ firstname: 'Eugene', lastname: 'Sinitsyn' }).first()
   }
 
   static async interviewer () {

@@ -10,7 +10,7 @@
     "repl.debug": "DEBUG=knex:query,knex:bindings nodemon --experimental-repl-await repl.js",
     "lint": "eslint --ext .js .",
     "lint:fix": "eslint --ext .js . --fix",
-    "test": "mocha test --exit",
+    "test": "mocha 'test/**/*.test.js' --recursive",
     "migrate": "knex migrate:latest",
     "migrate.test": "DB_NAME=interview_test knex migrate:latest",
     "seed": "knex seed:run",
@@ -45,9 +45,9 @@
   "mocha": {
     "slow": 2000,
     "colors": true,
+    "exit": true,
     "full-trace": true,
     "recursive": true,
-    "spec": "test/**/*.test.js",
     "file": [
       "./test/bootstrap.js"
     ]

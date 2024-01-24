@@ -11,10 +11,6 @@ describe('Interview', () => {
     await app.reset()
   })
 
-  after(async () => {
-    await app.close()
-  })
-
   it('get all interviews', async () => {
     await Interview.create({
       interviewee: new User({

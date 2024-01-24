@@ -43,7 +43,6 @@ const update = async (req, _res) => {
 
   console.log(`Updating interview with id [${id}]... `)
 
-  // edit interview
   return interview
 }
 

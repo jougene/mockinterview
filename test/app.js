@@ -37,7 +37,7 @@ class Application {
   }
 
   async close () {
-    await this.app.db.connection.destroy()
+    // await this.app.db.connection.destroy()
     await this.app.close()
   }
 }
